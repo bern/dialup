@@ -1,18 +1,19 @@
 import './MusicOptionButton.css';
 import { MusicOption } from './MusicContainer';
+import { tone } from '../utils/music';
 
 interface MusicOptionProps {
   option: MusicOption;
+  isActive: boolean;
 
   onClick: () => void;
 }
 
 export const MusicOptionButton = (props: MusicOptionProps) => {
-  const { option, onClick } = props;
+  const { option, onClick, isActive } = props;
 
   return (
-    <div className="btn" onClick={() => {
-      new Audio(option.url).play();
+    <div className={`btn ${isActive ? `btn__isActive` : ''}`} onClick={() => {
       onClick();
     }}>
       {option.text}

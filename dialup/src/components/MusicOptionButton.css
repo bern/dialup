@@ -48,3 +48,19 @@
   -moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
 }
+.btn__isActive{
+  background-color: darkblue;
+  color: white;
+  border-left-color: dimgrey;
+  border-top-color: dimgrey;
+  border-bottom-color: white;
+  border-right-color: white;
+  -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
+}
+.btn__disabled{
+  cursor: not-allowed !important;
+  background-color: #ddd;
+  color: #aaa;
+}
