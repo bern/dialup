@@ -1,0 +1,13 @@
+.trackBuilder {
+  color: black;
+  background-color: darkgrey;
+  border-style: solid;
+  border-width: 4px;
+  border-left-color: white;
+  border-top-color: white;
+  border-bottom-color: dimgrey;
+  border-right-color: dimgrey;
+  -webkit-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.75);
+}
