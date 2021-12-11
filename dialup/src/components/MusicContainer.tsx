@@ -82,7 +82,7 @@ export const MusicContainer = () => {
       <div style={{ width: '50%', paddingRight: '32px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           {musicOptions.map(
-            (audio) => <MusicOptionButton isActive={audio.text === (selectedTrack && selectedTrack.text || '')} key={audio.text} option={audio} onClick={() => {
+            (audio) => <MusicOptionButton isActive={audio.text === (selectedTrack && (selectedTrack.text || ''))} key={audio.text} option={audio} onClick={() => {
               setSelectedTrack(audio);
               playSelection(audio, undefined);
             }}/>
