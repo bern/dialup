@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MusicOption } from './MusicOption';
+import { MusicOptionButton } from './MusicOptionButton';
 import { TrackBuilder } from './TrackBuilder';
 import './MusicContainer.css';
 
@@ -8,20 +8,41 @@ const byte2 = require("../static/sounds/byte2.mp3");
 const byte3 = require("../static/sounds/byte3.mp3");
 const byte4 = require("../static/sounds/byte4.mp3");
 
+export interface MusicOption {
+  text: string;
+  url: string;
+}
+
 export const MusicContainer = () => {
-  const [tracks, setTracks] = useState<string[]>([]);
+  const [tracks, setTracks] = useState<MusicOption[]>([]);
 
   const resetTracks = () => {
     setTracks([]);
   }
 
-  const addTrack = (url: string) => {
-    const trackName = musicOptions.find((option) => option.url === url)?.text || '';
-    const newTracks = [...tracks, trackName];
+  const playTracks = () => {
+    playTrackByIndex(0);
+  }
+
+  const playTrackByIndex = (idx: number) => {
+    if (idx >= tracks.length) {
+      return;
+    }
+
+    const currentTrack = new Audio(tracks[idx].url)
+    currentTrack.addEventListener('ended', () => {
+      playTrackByIndex(idx + 1);
+    });
+
+    currentTrack.play();
+  }
+
+  const addTrack = (option: MusicOption) => {
+    const newTracks = [...tracks, option];
     setTracks(newTracks);
   }
 
-  const musicOptions = [{
+  const musicOptions: MusicOption[] = [{
     text: 'bee-dong',
     url: byte1.default
    },
@@ -42,8 +63,8 @@ export const MusicContainer = () => {
     <div>
       <div style={{ display: 'flex', paddingTop: '64px', justifyContent: 'space-between' }}>
         {musicOptions.map(
-          (audio) => <MusicOption key={audio.text} text={audio.text} url={audio.url} onClick={() => {
-            addTrack(audio.url);
+          (audio) => <MusicOptionButton key={audio.text} option={audio} onClick={() => {
+            addTrack(audio);
           }}/>
         )}
       </div>
@@ -51,7 +72,9 @@ export const MusicContainer = () => {
         <TrackBuilder tracks={tracks}/>
       </div>
       <div style={{ paddingTop: '16px', display: 'flex', justifyContent: 'space-evenly' }}>
-        <div className="control">
+        <div className="control" onClick={() => {
+          playTracks();
+        }}>
           [Play]
         </div>
         <div className="control" onClick={() => {
