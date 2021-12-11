@@ -78,39 +78,43 @@ export const MusicContainer = () => {
    }];
 
   return (
-    <div>
-      <div style={{ display: 'flex', paddingTop: '64px', justifyContent: 'space-between' }}>
-        {musicOptions.map(
-          (audio) => <MusicOptionButton isActive={audio.text === (selectedTrack && selectedTrack.text || '')} key={audio.text} option={audio} onClick={() => {
-            setSelectedTrack(audio);
-            playSelection(audio, undefined);
-          }}/>
-        )}
-      </div>
-      <div style={{ paddingTop: '32px' }}>
-        <MusicOptionPanel activeTone={selectedDiff} onClick={(diff: number) => {
-          setSelectedDiff(diff);
-          playSelection(undefined, diff);
-        }}/>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div className={`btn ${!selectedTrack ? 'btn__disabled' : ''}`} style={{alignItems: 'center', width: '50px', height: '100px', transform: 'rotate(90deg)'}} onClick={() => {
-          addTrack();
-        }}>{'>'}</div>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <TrackBuilder tracks={tracks}/>
-      </div>
-      <div style={{ paddingTop: '16px', display: 'flex', justifyContent: 'space-evenly' }}>
-        <div className="control" onClick={() => {
-          playTracks();
-        }}>
-          [Play]
+    <div style={{ display: 'flex', marginTop: '64px' }}>
+      <div style={{ width: '50%', paddingRight: '32px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          {musicOptions.map(
+            (audio) => <MusicOptionButton isActive={audio.text === (selectedTrack && selectedTrack.text || '')} key={audio.text} option={audio} onClick={() => {
+              setSelectedTrack(audio);
+              playSelection(audio, undefined);
+            }}/>
+          )}
         </div>
-        <div className="control" onClick={() => {
-          resetTracks();
-        }}>
-          [Reset]
+        <div style={{ paddingTop: '32px' }}>
+          <MusicOptionPanel activeTone={selectedDiff} onClick={(diff: number) => {
+            setSelectedDiff(diff);
+            playSelection(undefined, diff);
+          }}/>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '32px' }}>
+          <div className={`btn ${!selectedTrack ? 'btn__disabled' : ''}`} style={{alignItems: 'center', width: '100px' }} onClick={() => {
+            addTrack();
+          }}>{'>'}</div>
+        </div>
+      </div>
+      <div style={{ width: '50%', display: 'flex', flexDirection: 'column', paddingLeft: '32px' }}>
+        <div style={{ display: 'flex', flexGrow: '1', justifyContent: 'center' }}>
+          <TrackBuilder tracks={tracks}/>
+        </div>
+        <div style={{ paddingTop: '16px', display: 'flex', justifyContent: 'space-evenly' }}>
+          <div className="control" onClick={() => {
+            playTracks();
+          }}>
+            [Play]
+          </div>
+          <div className="control" onClick={() => {
+            resetTracks();
+          }}>
+            [Reset]
+          </div>
         </div>
       </div>
     </div>
