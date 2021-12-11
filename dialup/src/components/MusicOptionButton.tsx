@@ -1,6 +1,5 @@
 import './MusicOptionButton.css';
 import { MusicOption } from './MusicContainer';
-import { tone } from '../utils/music';
 
 interface MusicOptionProps {
   option: MusicOption;

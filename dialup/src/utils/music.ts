@@ -1,14 +1,22 @@
 import * as Tone from 'tone';
 
-export function tone(url: string, diff: number) {
-  const player = new Tone.Player(url).toDestination();
-  // //create a distortion effect
-  // const distortion = new Tone.PitchShift(diff).toDestination();
-  // //connect a player to the distortion
-  // player.connect(distortion);
+export function playUrlWithDiff(url: string, diff: number, onEnded?: () => void) {
+  const player = new Tone.Player(url);
+  //create a distortion effect
+  const distortion = new Tone.PitchShift(diff);
+  //connect a player to the distortion
+  player.connect(distortion);
+
+  distortion.toDestination();
 
   Tone.loaded().then(() => {
     player.start();
+
+    player.onstop = (() => {
+      if(onEnded) {
+        onEnded();
+      }
+    })
   });
 }
 

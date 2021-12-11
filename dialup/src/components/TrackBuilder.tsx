@@ -1,8 +1,8 @@
 import './TrackBuilder.css';
-import { MusicOption } from './MusicContainer';
+import { Track } from './MusicContainer';
 
 interface TrackBuilderProps {
-  tracks: MusicOption[];
+  tracks: Track[];
 }
 
 export const TrackBuilder = (props: TrackBuilderProps) => {
@@ -13,7 +13,7 @@ export const TrackBuilder = (props: TrackBuilderProps) => {
       {tracks.map((track) => {
         return (
           <>
-            [{track.text}]
+            {`[${track.option.text} ${track.diff < 0 ? `${track.diff}` : `+${track.diff}`}]`}
           </>
         )
       })}

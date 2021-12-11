@@ -4,7 +4,7 @@ import { MusicOptionPanel } from './MusicOptionPanel';
 import { TrackBuilder } from './TrackBuilder';
 import './MusicContainer.css';
 import './MusicOptionButton.css';
-import { tone } from '../utils/music';
+import { playUrlWithDiff } from '../utils/music';
 
 const byte1 = require("../static/sounds/byte1.mp3");
 const byte2 = require("../static/sounds/byte2.mp3");
@@ -16,8 +16,13 @@ export interface MusicOption {
   url: string;
 }
 
+export interface Track {
+  option: MusicOption;
+  diff: number;
+}
+
 export const MusicContainer = () => {
-  const [tracks, setTracks] = useState<MusicOption[]>([]);
+  const [tracks, setTracks] = useState<Track[]>([]);
   const [selectedTrack, setSelectedTrack] = useState<MusicOption>();
   const [selectedDiff, setSelectedDiff] = useState<number>(0);
 
@@ -34,33 +39,24 @@ export const MusicContainer = () => {
       return;
     }
 
-    const currentTrack = new Audio(tracks[idx].url)
-    currentTrack.addEventListener('ended', () => {
+    playUrlWithDiff(tracks[idx].option.url, tracks[idx].diff, () => {
       playTrackByIndex(idx + 1);
-    });
-
-    currentTrack.play();
+    })
   }
 
   const addTrack = () => {//option: MusicOption) => {
     if (selectedTrack) {
-      const newTracks = [...tracks, selectedTrack];
+      const newTracks: Track[] = [...tracks, {
+        option: selectedTrack,
+        diff: selectedDiff
+      }];
       setTracks(newTracks);
     }
   }
 
   const playSelection = (forceTrack?: MusicOption, forceDiff?: number) => {
-    console.log({
-      forceDiff,
-      selectedDiff
-    })
-
     if (selectedTrack || forceTrack) {
-      console.log({
-        track: forceTrack ? forceTrack.text : selectedTrack!.text,
-        diff: (forceDiff !== undefined) ? forceDiff : selectedDiff
-      })
-      tone(forceTrack ? forceTrack.url : selectedTrack!.url, forceDiff ? forceDiff : selectedDiff);
+      playUrlWithDiff(forceTrack ? forceTrack.url : selectedTrack!.url, (forceDiff !== undefined) ? forceDiff : selectedDiff);
     }
   }
 
@@ -93,7 +89,6 @@ export const MusicContainer = () => {
       </div>
       <div style={{ paddingTop: '32px' }}>
         <MusicOptionPanel activeTone={selectedDiff} onClick={(diff: number) => {
-          console.log('just selected diff', diff)
           setSelectedDiff(diff);
           playSelection(undefined, diff);
         }}/>
