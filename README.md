@@ -6,7 +6,7 @@ Inspired by the dial-up tones in my Nana's condo in my childhood, mix your own t
 Created for the 90's Kid Hack-Day at [The Garage in Brooklyn, NY](https://thegarage.dev/).
 
 ## Instructions
-Naviagate into the `/dialup` directory and run the following:
+Navigate into the `/dialup` directory and run the following:
 
 ```
 yarn install && yarn start
